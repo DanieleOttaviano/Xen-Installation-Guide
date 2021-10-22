@@ -450,7 +450,7 @@ xl info
 ```
 
 <p align="center">
-<img src="/../main/Images/RTDS1.png" width=50% height=50%>
+<img src="/../main/Images/RTDS1.png" width=30% height=30%>
 </p>
 
 This kind of scheduler is not suitable for Real-Time. Hence, we can change the scheduler in favour of RTDS from the configuration file /etc/default/grub.d/xen.cfg.
@@ -462,7 +462,7 @@ This kind of scheduler is not suitable for Real-Time. Hence, we can change the s
 Just enter the following strings:
 
 <p align="center">
-<img src="/../main/Images/RTDS2.png" width=50% height=50%>
+<img src="/../main/Images/RTDS2.png" width=30% height=30%>
 </p>
 
 Update Grub to make the changes effective:
@@ -474,7 +474,7 @@ update-grub
 if you reboot the system and run the command xl info, you should see the rtds scheduler:
 
 <p align="center">
-<img src="/../main/Images/RTDS3.png" width=50% height=50%>
+<img src="/../main/Images/RTDS3.png" width=30% height=30%>
 </p>
 
 Once RTDS is configured you can modify the parameters assigned to a VM with the following command:
@@ -527,7 +527,7 @@ Let’s do it:
 For testing purpose, I have created two ubuntu VM (see section “Creation of a PV Guest from scratch”) and I have assigned the same period and budget to both (xl sched-rtds -d ubuntu_vm -v all -p 100000 -b 50000 -e 1). Then I have modified the configuration files of both the VMs giving to each VM just 1 vCPU and assigning both the vCPUs to the same pCPU. (In my case the files are /etc/xen/ubuntu_vm_example.cfg and /etc/xen/ubuntu_vm2_xample.cfg) 
 
 <p align="center">
-<img src="/../main/Images/RTDS4.png" width=50% height=50%>
+<img src="/../main/Images/RTDS4.png" width=30% height=30%>
 </p>
 
 where <<cpus=”3”>> means that the vCPU is assigned to the fourth pCPU (the value “cpus” starts from 0).
@@ -535,8 +535,7 @@ where <<cpus=”3”>> means that the vCPU is assigned to the fourth pCPU (the v
 If we put both the VMs under stress and monitor the cpu utilization with the command “*xl top”,* it is possible to see that the utilization is almost 50% for both the VMs as expected
 
 <p align="center">
-<img src="/../main/Images/RTDS5.png" width=50% height=50%>
+<img src="/../main/Images/RTDS5.png" width=100% height=100%>
 </p>
 
 OSS: it is not exactly 50% because of the unpredictability of the software stack on which Xen is running. The test should be repeated on a bare metal environment to provide reliable results.  
-
