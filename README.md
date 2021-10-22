@@ -73,6 +73,7 @@ Open VirtualBox, click on **New** and compile the widget. You must choice **Linu
 
 
 
+
 Click Create. 
 Now you must choice the quantity of disk reserved for the VM. As before, the more the better. I suggest you to not assign less than 40gb.
 
@@ -81,12 +82,14 @@ Now you must choice the quantity of disk reserved for the VM. As before, the mor
 </p>
 
 
+
 Click Create again. Finally, you can **start** the VM.
 Once started the VM, you must choice the start-up disk. You can insert the ISO image we downloaded before. 
 
 <p align="center">
 <img src="/../main/Images/environment3.png" width=50% height=50%>
 </p>
+
 
 
 Click **Choose** and then **Start**.
@@ -117,6 +120,7 @@ Finally, you should have a virtual machine with Debian running. Enter “root”
 <img src="/../main/Images/installation1.png" width=50% height=50%>
 </p>
 
+
 ## Installation of Xen on Debian
 
 We need to install the **Debian Xen Project** via an apt meta-package called xen-linux-system (A meta-package is basically a way of installing a group of packages automatically and Apt will of course resolve all dependencies and bring in all the extra libraries we need).
@@ -132,6 +136,7 @@ Now we have a Xen Project hypervisor, a Xen Project kernel and the userland tool
 <p align="center">
 <img src="/../main/Images/installation2.png" width=50% height=50%>
 </p>
+
 
 Logging in as root and launch the following command to see the Xen section of **dmesg** created during the boot process. (dmesg prints on the standard output the messages stored inside the buffer of the OS kernel)
 
@@ -151,6 +156,7 @@ Logging in as root and launch the following command to see the Xen section of **
 <img src="/../main/Images/installation3.png" width=50% height=50%>
 </p>
 
+
 Now you can check If the virtualization is enabled in the bios searching for the strings vmx or svm or hypervisor in /proc/cpuinfo:
 
 ```
@@ -160,6 +166,7 @@ Now you can check If the virtualization is enabled in the bios searching for the
 <p align="center">
 <img src="/../main/Images/installation4.png" width=50% height=50%>
 </p>
+
 
 ## Network Setup
 
@@ -183,11 +190,12 @@ Depending on your hardware you see a file like this:
 <img src="/../main/Images/network1.png" width=30% height=30%>
 </p>
 
+
 Each stanza represents a single interface, let’s analyze the second:
 
 - “allow-hotplug ens33” means that *ens33* will be configured when *ifup -a* is run, which happens at boot time (*ifup* and *ifdown* are scripts used to activate and deactivate network interfaces). This means that the interface will automatically be started/stopped for you.
 
--  “iface ens33” describes the interface itself. In this case, it specifies that it should be configured by DHCP 
+- “iface ens33” describes the interface itself. In this case, it specifies that it should be configured by DHCP 
 
 for further information on the Linux network interface file you can read: 
 
@@ -199,6 +207,7 @@ You must edit the file, so it resembles such:
 <p align="center">
 <img src="/../main/Images/network2.png" width=30% height=30%>
 </p>
+
 
 In this way, we assign the IP address to the bridged interface. Now restart networking:
 
@@ -217,6 +226,7 @@ If all is well, the bridge will be listed, and your interface will appear in the
 <p align="center">
 <img src="/../main/Images/network3.png" width=60% height=60%>
 </p>
+
 
 Bridged networking will now automatically start every boot.
 
@@ -329,6 +339,7 @@ To create the VM, we will use the command “xl create”. This command needs to
 <img src="/../main/Images/PV1.png" width=60% height=60%>
 </p>
 
+
 Once the configuration is created and the netboot image is downloaded, we can finally create the VM:
 
 ```
@@ -351,6 +362,7 @@ After the first installation of ubuntu is completed, you must modify the configu
 <img src="/../main/Images/PV2.png" width=40% height=40%>
 </p>
 
+
 ### Getting the VM IP
 
 After creating VM and installing OS, you can recover the mac address of your VM with: 
@@ -363,6 +375,7 @@ xl network-list ubuntu_vm
 <img src="/../main/Images/PV3.png" width=60% height=60%>
 </p>
 
+
 Then you can use the **tcdumb** program to listen on bridge interface: 
 
 ```
@@ -374,6 +387,7 @@ Obviously to have something in output the VM should use the network interface. S
 <p align="center">
 <img src="/../main/Images/PV4.png" width=60% height=60%>
 </p>
+
 
 You can notice that 192.168.128.136 is the IP of PV Guest.
 
@@ -417,7 +431,7 @@ We can now create a guest operating system with this tool. It automates the proc
 
 - Generate a root password for the guest system
 
--  Unmount the guest filesystem
+- Unmount the guest filesystem
 
 These 9 steps can be carried out manually but they can be executed automatically with the following:
 
@@ -453,6 +467,7 @@ xl info
 <img src="/../main/Images/RTDS1.png" width=30% height=30%>
 </p>
 
+
 This kind of scheduler is not suitable for Real-Time. Hence, we can change the scheduler in favour of RTDS from the configuration file /etc/default/grub.d/xen.cfg.
 
 ```
@@ -465,6 +480,7 @@ Just enter the following strings:
 <img src="/../main/Images/RTDS2.png" width=30% height=30%>
 </p>
 
+
 Update Grub to make the changes effective:
 
 ```
@@ -476,6 +492,7 @@ if you reboot the system and run the command xl info, you should see the rtds sc
 <p align="center">
 <img src="/../main/Images/RTDS3.png" width=30% height=30%>
 </p>
+
 
 Once RTDS is configured you can modify the parameters assigned to a VM with the following command:
 
@@ -518,7 +535,7 @@ To check if the scheduler is working fine you can:
 
 - set the scheduling parameters such as it has a 50% reservation, with xl sched-rtds 
 
--  run a CPU-burning process inside the VMs (e.g., yes).
+- run a CPU-burning process inside the VMs (e.g., yes).
 
 - check with xl top (in Domain0) that the VM is getting no more than 50% pCPU time.
 
@@ -527,8 +544,9 @@ Let’s do it:
 For testing purpose, I have created two ubuntu VM (see section “Creation of a PV Guest from scratch”) and I have assigned the same period and budget to both (xl sched-rtds -d ubuntu_vm -v all -p 100000 -b 50000 -e 1). Then I have modified the configuration files of both the VMs giving to each VM just 1 vCPU and assigning both the vCPUs to the same pCPU. (In my case the files are /etc/xen/ubuntu_vm_example.cfg and /etc/xen/ubuntu_vm2_xample.cfg) 
 
 <p align="center">
-<img src="/../main/Images/RTDS4.png" width=30% height=30%>
+<img src="/../main/Images/RTDS4.png" width=20% height=20%>
 </p>
+
 
 where <<cpus=”3”>> means that the vCPU is assigned to the fourth pCPU (the value “cpus” starts from 0).
 
@@ -539,3 +557,138 @@ If we put both the VMs under stress and monitor the cpu utilization with the com
 </p>
 
 OSS: it is not exactly 50% because of the unpredictability of the software stack on which Xen is running. The test should be repeated on a bare metal environment to provide reliable results.  
+
+
+
+## 	CPU pools
+
+CPUpools is a introduced in Xen 4.2 which allows you to divide your physical CPUs into distinct groups called "**cpupools**". Each pool can have its entirely separate scheduler. Domains are assigned to pools on creation and can be moved from one pool to another.
+
+On boot, a "default pool" named Pool-0 will be created. You can see this pool as follows:
+
+    # xl cpupool-list
+    Name        CPUs  Sched   Active  Domain count
+    Pool-0        4  credit2   y     1
+
+This shows Pool-0, with 4 CPUs, and the credit2 scheduler, and one active domain that is Dom0. To see which CPUs are in the pool, use the "-c" option:
+
+    # xl cpupool-list -c
+    Name        CPU list
+    Pool-0       0,1,2,3
+
+If we want to create a new cpu pool with a specific scheduler, like for example RTDS, we must use the following command: 
+
+    xl cpupool-create name=\"testing\" sched=\"rtds\"
+
+You should see in output something like that:
+
+    Using config file "command line"
+    cpupool name:  testing
+    scheduler:   rtds
+    number of cpus: 0
+
+Finally, we need to remove some CPUs from Pool-0 and add them to the newly created pool.
+
+    # xl cpupool-cpu-remove Pool-0 3
+    
+    # xl cpupool-cpu-add testing 3
+
+Run “**xl cpupool-list -c**"  to see the changes. 
+
+By default, once you create a new VM it is assigned to the default pool (Pool-0). Hence, if you want to use another pool there are three ways:
+
+1. You can modify the configuration file (/etc/default/grub.d/xen.cfg) adding the string: **pool="testing".** Doing so, the default pool become “testing”.
+
+2. You can choose the cpupool at VM creation time:  *xl create /etc/xen/ubuntu_vm_example.cfg **pool=\"testing\"***
+
+3. You can migrate a particular VM to run on a particular cpupool:  *xl cpupool-migrate ubuntu_vm Pool-0*
+
+***OSS: Domain-0 can't be moved to another pool.***
+
+
+
+## Setup of null_scheduler on Xen
+
+In cases where one is absolutely sure that there will be less vCPUs than pCPUs, having to pay the cost, mostly in terms of overhead, of an advanced scheduler may be not desirable. In this case it is possible to use the null_scheduler.
+
+Of course, the same passages from the previous section can be followed to implement the null_scheduler. 
+
+```
+nano /etc/default/grub.d/xen.cfg  
+```
+
+Enter the following string:
+
+<p align="center">
+<img src="/../main/Images/null1.png" width=30% height=30%>
+</p>
+
+Update Grub to make the changes effective:
+
+```
+update-grub  
+```
+
+if you reboot the system and run the command xl info, you should see the rtds scheduler: 
+
+<p align="center">
+<img src="/../main/Images/null2.png" width=30% height=30%>
+</p>
+
+If used as default scheduler, at Xen boot, it is recommended to **limit the number of Dom0 vCPUs**. Otherwise, all the pCPUs will have one Dom0's vCPU assigned, and there won't be room for running efficiently (if at all) any guest. 
+
+To do it we must change the same configuration file: /etc/default/grub.d/xen.cfg. In this example I decided to assign 2 vCPU to dom0 (dom0_max_vcpus=2)  and to pin these vCPUs to two fixed pCPU(dom0_vcpus_pin):
+
+<p align="center">
+<img src="/../main/Images/null3.png" width=50% height=50%>
+</p>
+
+Then run *update-grub* and *reboot*. 
+
+To check, you can launch "*xl list*" and see that there are 2 vCPU assigned to Domain-0:
+
+<p align="center">
+<img src="/../main/Images/null4.png" width=50% height=50%>
+</p>
+
+
+
+## **Fixed amount of memory for Xen Project dom0** 
+
+Dedicating fixed amount of memory for dom0 is good for two reasons:
+
+1. First of all (dom0) Linux kernel calculates various network related parameters based on the boot time amount of memory.
+
+2. The second reason is Linux needs memory to store the memory metadata (per page info structures), and this allocation is also based on the boot time amount of memory.
+
+Now, if you boot up the system with dom0 having all the memory visible to it, and then balloon down dom0 memory every time you start up a new guest, you end up having only a small amount of the original (boot time) amount of memory available in the dom0 in the end. This means the calculated parameters are not correct anymore, and you end up wasting a lot of memory for the metadata for a memory you don't have anymore. Also ballooning down busy dom0 might have bad side effects.
+
+So, first we have to configure the toolstack to make sure dom0 memory is never ballooned down while starting new guests deactivating the **autobaloon** function. It is enough to modify the xl configuration file in the following path */etc/xen/xl.conf*:
+
+<p align="center">
+<img src="/../main/Images/fixed1.png" width=50% height=50%>
+</p>
+
+Then we can fix the quantity of RAM of Dom0 in the grub configuration file /etc/default/grub (In this example I decided to give 1024 mb of RAM to dom0):
+
+<p align="center">
+<img src="/../main/Images/fixed2.png" width=50% height=50%>
+</p>
+
+run *update-grub* and *reboot*. 
+
+To check, you can launch "*xl list*" and see that the memory assigned to Domain-0 is 1024:
+
+<p align="center">
+<img src="/../main/Images/fixed3.png" width=50% height=50%>
+</p>
+
+To verify the vCPUs assignment you can run the following (for example using null_scheduler the first 2 are assigned to dom0, while the other two are assigned to ubuntu_vm):
+
+```
+xl vcpu-list
+```
+
+<p align="center">
+<img src="/../main/Images/fixed4.png" width=50% height=50%>
+</p>
