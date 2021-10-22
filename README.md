@@ -60,4 +60,9 @@ Debian is a simple, stable, and well supported Linux distribution. It has includ
 We have to create a new Debian Virtual Machine using the downloaded ISO (The example is done on VirtualBox, but it is similar on other VM Managers). 
 Open VirtualBox, click on **New** and compile the widget. You must choice **Linux** as type and **Debian (64bit)** as Version. Then you can assign the quantity of RAM to the virtual machine. I decided to assign 4GB but the more you have the better! Remember that we will deploy several OS on this VM.
 
+![](/../main/Images/environment1.png)
+
+Click Create. 
+Now you must choice the quantity of disk reserved for the VM. As before, the more the better. I suggest you to not assign less than 40gb.
+
 
