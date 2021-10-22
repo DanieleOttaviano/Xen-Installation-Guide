@@ -60,9 +60,42 @@ Debian is a simple, stable, and well supported Linux distribution. It has includ
 We have to create a new Debian Virtual Machine using the downloaded ISO (The example is done on VirtualBox, but it is similar on other VM Managers). 
 Open VirtualBox, click on **New** and compile the widget. You must choice **Linux** as type and **Debian (64bit)** as Version. Then you can assign the quantity of RAM to the virtual machine. I decided to assign 4GB but the more you have the better! Remember that we will deploy several OS on this VM.
 
-![](/../main/Images/environment1.png | width=50)
+<p align="center">
+    <img src="/../main/Images/environment1.png" width=50% height=50%>
+</p>
+
 
 Click Create. 
 Now you must choice the quantity of disk reserved for the VM. As before, the more the better. I suggest you to not assign less than 40gb.
+
+<p align="center">
+<img src="/../main/Images/environment2.png" width=50% height=50%>
+</p>
+
+Click Create again. Finally, you can **start** the VM.
+Once started the VM, you must choice the start-up disk. You can insert the ISO image we downloaded before. 
+
+<p align="center">
+<img src="/../main/Images/environment3.png" width=50% height=50%>
+</p>
+
+Click **Choose** and then **Start**.
+
+
+##Installation of Debian-11
+Once the VM is started you should see a menu, choose the default “**Install**” option to begin the installation process. Install the system The Debian installer is very straight forward. Follow the prompts until you reach the **disk partitioning section**.
+Choose **advanced/custom**, we are going to configure a few partitions here, one for **Boot** “/boot” another for **RootFS** “/”, one more for **swap** and a final partition to setup as an **LVM** (Logical Volume Manager) volume group for our guest machines.
+
+- First create the “/boot” partition by choosing the disk and hitting enter, make the partition 300MB and format it as ext2, choose /boot as the mountpoint.
+- Repeat the process for “/” but of course changing the mountpoint to “/” and making it 15GB or so large. Format it as ext3.
+- Create another partition approximately 1.5x the amount of RAM you have in size and elect to have it used as a swap volume (6GB in my case).
+- Finally create a partition that consumes the rest of the diskspace and reserve it for LVM
+
+We should now have a layout that looks like this assuming your disk device is /dev/sda :
+
+    sda1 - /boot 200MB
+    sda2 - / 15GB
+    sda3 – swap 	6GB
+    sda4 - reserved for LVM
 
 
