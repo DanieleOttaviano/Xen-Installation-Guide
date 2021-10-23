@@ -28,6 +28,7 @@ Xen also allows splitting the available CPUs into sets called pools characterize
 - RTDS scheduler.	https://xenbits.xen.org/docs/4.10-testing/features/sched_rtds.html
 - Xen Best Practices. https://wiki.xenproject.org/wiki/Xen_Project_Best_Practices
 - How to manage CPU pools? https://wiki.xenproject.org/wiki/Cpupools_Howto
+- How to write a VM configuration files? https://xenbits.xen.org/docs/unstable/man/xl.cfg.5.html 
 
 ## Index
 
@@ -339,7 +340,7 @@ To create the VM, we will use the command “xl create”. This command needs to
 <img src="/../main/Images/PV1.png" width=60% height=60%>
 </p>
 
-
+See https://xenbits.xen.org/docs/unstable/man/xl.cfg.5.html if you need more information about the configuration file parameters. 
 Once the configuration is created and the netboot image is downloaded, we can finally create the VM:
 
 ```
