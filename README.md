@@ -107,7 +107,7 @@ Choose **advanced/custom**, we are going to configure a few partitions here, one
 
 We should now have a layout that looks like this assuming your disk device is /dev/sda :
 
-    sda1 - /boot 200MB
+    sda1 - /boot 300MB
     sda2 - / 15GB
     sda3 – swap 	6GB
     sda4 - reserved for LVM
