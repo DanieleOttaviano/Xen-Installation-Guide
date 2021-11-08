@@ -300,7 +300,7 @@ lvcreate -n <name of the volume> -L <size, you can use G/M here> <volume group>
 It is possible to remove the created volume with the following command:
 
 ```
-lvremove /dev/vg0/database-data
+lvremove /dev/vg0/<name of the volume>
 ```
 
 You can list the volume groups with the following command :
