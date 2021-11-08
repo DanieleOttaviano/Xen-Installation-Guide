@@ -514,7 +514,7 @@ xl sched-rtds
 - -c CPUPOOL, --cpupool=CPUPOOL
   - Restrict output to domains in the specified cpupool.
 
-As an example, we can assign to our ubuntu VM a period of 500us and budget 250us:
+As an example, we can assign to our ubuntu VM a period of 100000us and budget 50000us:
 
 ```
 xl sched-rtds -d ubuntu_vm -v all -p 100000 -b 50000 -e 1
