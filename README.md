@@ -349,9 +349,11 @@ xl create -c /etc/xen/ubuntu_vm_example.cfg
 
 The -c in this command tells xl that we wish to connect to the guest virtual console, a paravirtualized serial port within the domain that xen-create-image configured to listen with a getty. This command also starts the VM.
 
-You can leave the guest virtual console by pressing “**ctrl+]”** and re-enter it by running the “**xl console ubuntu_vm**” command.
+You can leave the guest virtual console by pressing “**ctrl+]**” and re-enter it by running the “**xl console ubuntu_vm**” command.
 
-You can later shutdown this guest either from within the domain or from dom0 with the following:
+N.B.: After the installation is completed you must exit from the VM pressing “**ctrl+]**” and shutdown the virtual machine before it starts a new installation.
+
+You can shutdown this guest either from within the domain or from dom0 with the following:
 
 ```
 xl shutdown ubuntu_vm
