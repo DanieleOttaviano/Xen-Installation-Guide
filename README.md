@@ -277,7 +277,7 @@ First, we need to install LVM:
 apt-get install lvm2
 ```
 
-After the installation is completed, we can configure a physical device to maintain a volume group (in this example we use /dev/sda4):
+After the installation is completed, we can configure a physical device to maintain a volume group (in this example we use /dev/sda4 but depend on your memory partition choices):
 
 ```
 pvcreate /dev/sda4
