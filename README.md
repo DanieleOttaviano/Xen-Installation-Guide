@@ -105,6 +105,8 @@ Choose **advanced/custom**, we are going to configure a few partitions here, one
 - Create another partition approximately 1.5x the amount of RAM you have in size and elect to have it used as a swap volume (6GB in my case).
 - Finally create a partition that consumes the rest of the diskspace and reserve it for LVM
 
+
+OSS: the “/boot” partition must be a primary partition, while the others can be both primary and logical
 We should now have a layout that looks like this assuming your disk device is /dev/sda :
 
     sda1 - /boot 300MB
