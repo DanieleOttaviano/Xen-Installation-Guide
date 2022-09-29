@@ -1,6 +1,6 @@
 # Xen-Installation-Guide
 
-In this reposity i explain how to test and install Xen on a Virtual Machine for testing and teching purpose.  
+In this reposity i explain how to test and install Xen on a Virtual Machine for testing and teaching purpose.  
 
 ## Introduction
 
